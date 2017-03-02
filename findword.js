@@ -5,19 +5,22 @@ const wordlist = [ 'head', 'help', 'hell', 'hall', 'tall', 'tail'];
 initialState = {
   candidate:         'wail',
   answer:            'tail',
-  wordlist:          worldlist,
+  wordlist:          wordlist,
   candidatePosition: 0,
   alphabetPosition:  0,
   foundAnswer:       false
 };
 
-findword(initialState);
+const solution = findword(initialState);
 
-function findword(state) (
+console.log("got solution:", solution);
+
+function findword(state) {
   const letters = 'abcdefghijklmnopqrstuvwxyz';
 
-  if (state.foundAnswer === true || state.candidate === state.answer)
+  if (state.foundAnswer === true || state.candidate === state.answer) {
     state.foundAnswer = true;
+    console.log("Found answer");
     return state;
   }
 
@@ -25,4 +28,12 @@ function findword(state) (
     candPos: candidatePosition, alphPos: alphabetPostion
   });
   findword(newCandidate, answer, alphabetPostion++)
+}
+
+function replaceCharacterAt(index, character) {
+    return (
+      this.substr(0, index) +
+      character +
+      this.substr(index + character.length);
+    );
 }
