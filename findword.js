@@ -1,70 +1,59 @@
 
 
 const wordlist  = [
-  'wall', 'well', 'head', 'wail', 'help', 'hell', 'hall', 'tall', 'tail',
-  'jail', 'fail', 'hail', 'foil'
+  'wall', 'well', 'head', 'wail', 'help', 'hell', 'hall',
+  'tall', 'tail', 'jail', 'fail', 'hail', 'foil', 'heat',
+  'heal', 'sail'
  ];
-const hits      = {};
-const hitstring = {
-  0: '^   ',
-  1: ' ^  ',
-  2: '  ^ ',
-  3: '   ^'
-};
 
-initialState = {
-  candidate:         'wall',
-  wordlist:          wordlist,
-  candidatePosition: 0,
-  alphabetPosition:  0,
-  foundAnswer:       false
-};
+const path = [];
+const wordsToString = words => words.reduce((a, v) => (a + ' > ' + v), '');
 
-const solution = findword('sail');
 
-console.log("got solution:", solution);
+function start(wordlist, path) {
+  let [word] = wordlist.splice(0, 1);
 
-function findword(candidate, current = '', position = 0, charPos = 0) {
-  const letters = 'abcdefghijklmnopqrstuvwxyz';
-
-  let newCandidate = '';
-  let newPosition  = 0;
-  let newCharPos   = 0;
-
-  if(position > 3) {
-    return true;
-  }
-
-  if (charPos >= letters.length) {
-    console.log('End of alphabet: ', charPos);
-    return false;
-  }
-
-  if (wordlist.includes(candidate) && candidate !== current) {
-    newPosition = position + 1;
-    newCharPos  = 0;
-
-    console.log(' hit:', candidate, current, position)
-    hits[position] = candidate;
-    return findword(candidate, candidate, newPosition, newCharPos);
-  }
-
-  newCandidate = replaceCharacterAt(candidate, position, letters.charAt(charPos));
-  newCharPos   = charPos + 1;
-
-  if (findword(newCandidate, current, position, newCharPos)) {
-    console.log('got true from candidate');
-  } else {
-    newCharPos  = 0;
-    newPosition = position + 1;
-    findword(candidate, current, newPosition, newCharPos);
-  }
+  let newPath = searchList(wordlist, word, path);
+  console.log('path:', wordsToString(newPath));
 }
 
-function replaceCharacterAt(string, index, character) {
-    return (
-      string.substr(0, index) +
-      character +
-      string.substr(index + character.length)
-    );
+function searchList(wordlist, word, path) {
+  path.push(word);
+  // console.log('wordlist:', wordsToString(wordlist));
+  // console.log('    path:',wordsToString(path));
+  // console.log('');
+
+  let index = findNewWord(wordlist, word);
+  if (index > -1) {
+    let [newWord] = wordlist.splice(index, 1);
+    let newPath   = searchList(wordlist, newWord, path);
+    return newPath;
+  }
+  return path;
 }
+
+
+function findNewWord(wordlist, word) {
+  for (let i = 0; i < word.length; i++) {
+    for (let char of 'abcdefghijklmnopqrstuvwxyz') {
+      let newWord = replaceCharacterAt(word, i, char);
+      let index   = wordlist.indexOf(newWord);
+      if (index > -1) {
+        return index;
+      }
+    }
+  }
+
+  return -1;
+}
+
+/**
+ * Replaces a character at a given position in a string.
+ */
+const replaceCharAt = (str, index, char) => (
+  str.substr(0, index) + char + str.substr(index + char.length)
+);
+
+
+
+start(wordlist, path);
