@@ -5,5 +5,8 @@
   "main": "traverse.js",
   "repository": "git@github.com:tfmalt/permutestring.git",
   "author": "Thomas Malt <thomas@malt.no>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "args": "^2.3.0"
+  }
 }
