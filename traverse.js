@@ -3,7 +3,7 @@
 const wordlist  = [
   'wall', 'well', 'head', 'wail', 'help', 'hell', 'hall',
   'tall', 'tail', 'jail', 'fail', 'hail', 'foil', 'heat',
-  'heal', 'sail'
+  'heal', 'sail', 'tell', 'sell'
 ];
 
 const path = [];
@@ -38,7 +38,7 @@ const replaceCharAt = (str, index, char) => (
  * @returns {integer} index of the matching word in list or -1
  */
 const findWord = (list, word) => {
-  for (let i = 0; i < word.length; i + 1) {
+  for (let i = 0; i < word.length; i = i + 1) {
     for (let char of 'abcdefghijklmnopqrstuvwxyz') {
       let newWord = replaceCharAt(word, i, char);
       let index   = list.indexOf(newWord);
@@ -63,19 +63,22 @@ const findWord = (list, word) => {
  */
 const searchList = (list, word, currpath) => {
   currpath.push(word);
+  console.log("     list:", toString(list));
+  console.log("     path:", toString(currpath));
 
-  let index = findWord(wordlist, word);
+  let index = findWord(list, word);
   if (index > -1) {
-    let [newWord] = wordlist.splice(index, 1);
-    let newPath   = searchList(wordlist, newWord, path);
+    let [newWord] = list.splice(index, 1);
+    let newPath   = searchList(list, newWord, currpath);
     return newPath;
   }
 
-  return path;
+  return currpath;
 };
 
 const start = (list, currpath) => {
   console.log("Starting iterating over words:");
+  console.log("Word list:", toString(list));
   let [word] = list.splice(0, 1);
 
   let newPath = searchList(list, word, currpath);
