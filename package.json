@@ -1,0 +1,9 @@
+{
+  "name": "wowbox",
+  "version": "1.0.0",
+  "description": "Programming Challenge",
+  "main": "traverse.js",
+  "repository": "git@github.com:tfmalt/permutestring.git",
+  "author": "Thomas Malt <thomas@malt.no>",
+  "license": "MIT"
+}
