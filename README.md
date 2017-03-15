@@ -1,6 +1,6 @@
 # Walk a list of words
 
-This was a programming challenge I got that bothered me because I didn't
+This was a programming challenge I got that really bothered me because I didn't
 find a solution right way. So I implemented one. You can probably use it to
 see in which areas I'm rusty, how I go about problem solving and my approach
 to best practices.
